@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @task.title %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= (@task.created_at + (Time.now).gmt_offset).strftime("%H:%M:%S - %d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Period:</strong>
+  <% if @task.completed? %>
+    <span class='reloj' data-offset='<%=(@task.created_at).strftime("%d %m %Y %H:%M:%S %Z") %>'></span>
+    </p>
+  <%else%>
+    <%=Time.at((@task.completed_at) - (@task.created_at)-(Time.now).gmt_offset).strftime("%H:%M:%S")%>
+    </p>
+    <strong>Finish:</strong>
+    <%= (@task.completed_at).strftime("%H:%M:%S - %d/%m/%Y") %>
+    </p>
+  <% end %>
+
+
+<br>
+
+<div id="tags_wrapper">
+	<%= render @task.tags %>
+	<div id="form">
+		<%= render "tags/form" %>
+	</div>
+</div>
+
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>

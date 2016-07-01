@@ -1,0 +1,54 @@
+ <section id="home_header">
+  <div class="banner">
+    <div class="search-header">
+      <div class="narrow-container">
+        <h2>What are you doing now?</h2>
+        <form action="create" class="search" method="Post">          
+          <div class="input-group input-group-lg">
+            <input placeholder="Now..." class="form-control" type="search">
+            <span class="input-group-btn">
+             <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-dashboard"></span></button>
+           </span>
+         </div>
+       </div>
+     </div>
+   </section>
+
+   <br>
+
+   <div class="panel panel-default">
+    <div class="panel-heading">
+     Listing Tasks
+   </div>
+   <!-- /.panel-heading -->
+   <div class="panel-body">
+    <div class="list-group">
+
+      <% @tasks.each do |task| %>
+
+      <span href="#" class="list-group-item">
+        <h4 class="list-group-item-heading"><%= task.title %></h4>    
+        <p class="list-group-item-text">
+          <% if task.completed? %>
+          <span class='reloj' data-offset='<%=(task.created_at).strftime("%d %m %Y %H:%M:%S %Z") %>'> </span>
+          <%= link_to 'mark to complete', complete_task_path(task), method: :patch %>
+          <%else%>
+          <%= Time.at(task.completed_at - task.created_at - (Time.now).gmt_offset).strftime("%H:%M:%S") %>
+          <%end%>
+
+
+          <%= link_to task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-sm pull-right" do %>
+            <i class="glyphicon glyphicon-fire">Destroy</i>
+          <% end %>
+          <%= link_to edit_task_path(task), class: "btn btn-default btn-sm pull-right" do %>
+            <i class="glyphicon glyphicon-pencil">Edit</i>
+          <% end %>
+          <%= link_to task, class: "btn btn-default btn-sm pull-right" do %>
+            <i class="glyphicon glyphicon-zoom-in">show</i>
+          <% end %>
+        </p>
+      </span>
+      <% end %>   
+    </div>
+  </div>
+</div>

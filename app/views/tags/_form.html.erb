@@ -1,0 +1,4 @@
+<%= form_for([@task, @task.tags.build]) do |f| %>
+	<%= f.text_field :title, placeholder: "new tag" %>
+	<%= f.submit %>
+<% end %>
